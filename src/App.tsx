@@ -1,13 +1,13 @@
 import { VFC } from 'react';
-import Counter from './Counter';
+import Timer from './Timer';
 import './App.css';
 
 const App: VFC = () => (
   <div className="container">
     <header>
-      <h1>カウンター</h1>
+      <h1>タイマー</h1>
     </header>
-    <Counter />
+    <Timer limit={60} />
   </div>
 );
 
