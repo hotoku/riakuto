@@ -2,7 +2,7 @@ import React, { Component, ReactElement } from "react";
 import { Button, Card, Statistic, Icon } from "semantic-ui-react";
 import "./App.css";
 
-const LIMIT = 60;
+const LIMIT = 5;
 type State = { timeLeft: number };
 
 class App extends Component<unknown, State> {
@@ -30,7 +30,7 @@ class App extends Component<unknown, State> {
     this.setState((prevState) => ({ timeLeft: prevState.timeLeft - 1 }));
 
   reset(): void {
-    this.setState({ timeLeft: 0 });
+    this.setState({ timeLeft: LIMIT });
   }
 
   increment(): void {
