@@ -1,22 +1,44 @@
-import { Component, ReactElement } from "react";
-import { Button, Card, Statistic } from "semantic-ui-react";
+import React, { Component, ReactElement } from "react";
+import { Button, Card, Statistic, Icon } from "semantic-ui-react";
 import "./App.css";
 
-type State = { count: number };
+const LIMIT = 60;
+type State = { timeLeft: number };
 
 class App extends Component<unknown, State> {
+  timerId: NodeJS.Timer | null = null;
+
   constructor(props: unknown) {
     super(props);
-    this.state = { count: 0 };
+    this.state = { timeLeft: LIMIT };
   }
+
+  componentDidMount = (): void => {
+    this.timerId = setInterval(this.tick, 1000);
+  };
+
+  componentDidUpdate = (): void => {
+    const { timeLeft } = this.state;
+    if (timeLeft === 0) this.reset();
+  };
+
+  componentWillUnmount = (): void => {
+    if (this.timerId) clearInterval(this.timerId);
+  };
+
+  tick = (): void =>
+    this.setState((prevState) => ({ timeLeft: prevState.timeLeft - 1 }));
+
   reset(): void {
-    this.setState({ count: 0 });
+    this.setState({ timeLeft: 0 });
   }
+
   increment(): void {
-    this.setState((state) => ({ count: state.count + 1 }));
+    this.setState((state) => ({ timeLeft: state.timeLeft + 1 }));
   }
+
   render(): ReactElement {
-    const { count } = this.state;
+    const { timeLeft } = this.state;
     return (
       <div className="container">
         <header>
@@ -25,19 +47,14 @@ class App extends Component<unknown, State> {
         </header>
         <Card>
           <Statistic className="number-board">
-            {" "}
-            <Statistic.Label>count</Statistic.Label>{" "}
-            <Statistic.Value>{count}</Statistic.Value>
-          </Statistic>{" "}
+            <Statistic.Label>time</Statistic.Label>
+            <Statistic.Value>{timeLeft}</Statistic.Value>
+          </Statistic>
           <Card.Content>
-            <div className="ui two buttons">
-              <Button color="red" onClick={() => this.reset()}>
-                Reset
-              </Button>
-              <Button color="green" onClick={() => this.increment()}>
-                +1{" "}
-              </Button>
-            </div>{" "}
+            <Button color="red" onClick={() => this.reset()}>
+              <Icon name="redo" />
+              Reset
+            </Button>
           </Card.Content>
         </Card>
       </div>
