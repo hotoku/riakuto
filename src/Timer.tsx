@@ -1,6 +1,6 @@
-import { VFC, useEffect, useState } from 'react';
-import { Button, Card, Icon, Statistic } from 'semantic-ui-react';
-import './Timer.css';
+import { VFC, useEffect, useState } from "react";
+import { Button, Card, Icon, Statistic } from "semantic-ui-react";
+import "./Timer.css";
 
 const Timer: VFC<{ limit: number }> = ({ limit }) => {
   const [timeLeft, setTimeLeft] = useState(limit);
@@ -13,10 +13,9 @@ const Timer: VFC<{ limit: number }> = ({ limit }) => {
     return () => clearInterval(timerId);
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (timeLeft === 0) setTimeLeft(limit);
-  });
+  }, [timeLeft, limit]);
 
   return (
     <Card>
