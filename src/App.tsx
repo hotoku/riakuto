@@ -1,7 +1,9 @@
 import { Component, ReactElement } from "react";
 import { Button, Card, Statistic } from "semantic-ui-react";
 import "./App.css";
+
 type State = { count: number };
+
 class App extends Component<unknown, State> {
   constructor(props: unknown) {
     super(props);
