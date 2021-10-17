@@ -1,7 +1,7 @@
-import { VFC, useEffect, useMemo, useState } from 'react';
-import { Button, Card, Icon, Statistic } from 'semantic-ui-react';
-import { getPrimes } from 'utils/math-tool';
-import './Timer.css';
+import { VFC, useEffect, useMemo, useState } from "react";
+import { Button, Card, Icon, Statistic } from "semantic-ui-react";
+import { getPrimes } from "utils/math-tool";
+import "./Timer.css";
 
 type TimerProps = {
   limit: number;
@@ -14,6 +14,15 @@ const Timer: VFC<TimerProps> = ({ limit }) => {
   const tick = () => setTimeLeft((t) => t - 1);
 
   useEffect(() => {
+    console.log("this runs only first rendering");
+  }, []);
+
+  useEffect(() => {
+    console.log("this runs every rendering");
+  });
+
+  useEffect(() => {
+    console.log("this runs only first rendering, setInterval");
     const timerId = setInterval(tick, 1000);
 
     return () => clearInterval(timerId);
@@ -28,7 +37,7 @@ const Timer: VFC<TimerProps> = ({ limit }) => {
       <Statistic className="number-board">
         <Statistic.Label>time</Statistic.Label>
         <Statistic.Value
-          className={primes.includes(timeLeft) ? 'prime-number' : undefined}
+          className={primes.includes(timeLeft) ? "prime-number" : undefined}
         >
           {timeLeft}
         </Statistic.Value>
